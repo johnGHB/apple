@@ -12,8 +12,6 @@
 		3FC0E5B81E800DE100F3BB2D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3FC0E5B61E800DE100F3BB2D /* Main.storyboard */; };
 		3FC0E5BA1E800DE100F3BB2D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3FC0E5B91E800DE100F3BB2D /* Assets.xcassets */; };
 		3FC0E5BD1E800DE100F3BB2D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3FC0E5BB1E800DE100F3BB2D /* LaunchScreen.storyboard */; };
-		3FC0E5C81E800DE100F3BB2D /* vpnTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC0E5C71E800DE100F3BB2D /* vpnTests.swift */; };
-		3FC0E5D31E800DE100F3BB2D /* vpnUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC0E5D21E800DE100F3BB2D /* vpnUITests.swift */; };
 		3FC0E5E21E81608A00F3BB2D /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FC0E5E11E81608A00F3BB2D /* NetworkExtension.framework */; };
 /* End PBXBuildFile section */
 
@@ -43,11 +41,7 @@
 		3FC0E5BC1E800DE100F3BB2D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		3FC0E5BE1E800DE100F3BB2D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3FC0E5C31E800DE100F3BB2D /* vpnTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = vpnTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		3FC0E5C71E800DE100F3BB2D /* vpnTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = vpnTests.swift; sourceTree = "<group>"; };
-		3FC0E5C91E800DE100F3BB2D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3FC0E5CE1E800DE100F3BB2D /* vpnUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = vpnUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		3FC0E5D21E800DE100F3BB2D /* vpnUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = vpnUITests.swift; sourceTree = "<group>"; };
-		3FC0E5D41E800DE100F3BB2D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3FC0E5E11E81608A00F3BB2D /* NetworkExtension.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NetworkExtension.framework; path = System/Library/Frameworks/NetworkExtension.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -81,8 +75,6 @@
 			isa = PBXGroup;
 			children = (
 				3FC0E5B11E800DE100F3BB2D /* vpn */,
-				3FC0E5C61E800DE100F3BB2D /* vpnTests */,
-				3FC0E5D11E800DE100F3BB2D /* vpnUITests */,
 				3FC0E5B01E800DE100F3BB2D /* Products */,
 				3FC0E5E01E81608A00F3BB2D /* Frameworks */,
 			);
@@ -109,24 +101,6 @@
 				3FC0E5BE1E800DE100F3BB2D /* Info.plist */,
 			);
 			path = vpn;
-			sourceTree = "<group>";
-		};
-		3FC0E5C61E800DE100F3BB2D /* vpnTests */ = {
-			isa = PBXGroup;
-			children = (
-				3FC0E5C71E800DE100F3BB2D /* vpnTests.swift */,
-				3FC0E5C91E800DE100F3BB2D /* Info.plist */,
-			);
-			path = vpnTests;
-			sourceTree = "<group>";
-		};
-		3FC0E5D11E800DE100F3BB2D /* vpnUITests */ = {
-			isa = PBXGroup;
-			children = (
-				3FC0E5D21E800DE100F3BB2D /* vpnUITests.swift */,
-				3FC0E5D41E800DE100F3BB2D /* Info.plist */,
-			);
-			path = vpnUITests;
 			sourceTree = "<group>";
 		};
 		3FC0E5E01E81608A00F3BB2D /* Frameworks */ = {
@@ -281,7 +255,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3FC0E5C81E800DE100F3BB2D /* vpnTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -289,7 +262,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3FC0E5D31E800DE100F3BB2D /* vpnUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -528,6 +500,7 @@
 				3FC0E5D91E800DE100F3BB2D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		3FC0E5DA1E800DE100F3BB2D /* Build configuration list for PBXNativeTarget "vpnTests" */ = {
 			isa = XCConfigurationList;
@@ -536,6 +509,7 @@
 				3FC0E5DC1E800DE100F3BB2D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		3FC0E5DD1E800DE100F3BB2D /* Build configuration list for PBXNativeTarget "vpnUITests" */ = {
 			isa = XCConfigurationList;
@@ -544,6 +518,7 @@
 				3FC0E5DF1E800DE100F3BB2D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
