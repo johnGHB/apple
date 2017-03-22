@@ -14,6 +14,7 @@
 		3FC0E5BD1E800DE100F3BB2D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3FC0E5BB1E800DE100F3BB2D /* LaunchScreen.storyboard */; };
 		3FC0E5C81E800DE100F3BB2D /* vpnTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC0E5C71E800DE100F3BB2D /* vpnTests.swift */; };
 		3FC0E5D31E800DE100F3BB2D /* vpnUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC0E5D21E800DE100F3BB2D /* vpnUITests.swift */; };
+		3FC0E5E21E81608A00F3BB2D /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FC0E5E11E81608A00F3BB2D /* NetworkExtension.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +48,7 @@
 		3FC0E5CE1E800DE100F3BB2D /* vpnUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = vpnUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3FC0E5D21E800DE100F3BB2D /* vpnUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = vpnUITests.swift; sourceTree = "<group>"; };
 		3FC0E5D41E800DE100F3BB2D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3FC0E5E11E81608A00F3BB2D /* NetworkExtension.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NetworkExtension.framework; path = System/Library/Frameworks/NetworkExtension.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,6 +56,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3FC0E5E21E81608A00F3BB2D /* NetworkExtension.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -81,6 +84,7 @@
 				3FC0E5C61E800DE100F3BB2D /* vpnTests */,
 				3FC0E5D11E800DE100F3BB2D /* vpnUITests */,
 				3FC0E5B01E800DE100F3BB2D /* Products */,
+				3FC0E5E01E81608A00F3BB2D /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -123,6 +127,14 @@
 				3FC0E5D41E800DE100F3BB2D /* Info.plist */,
 			);
 			path = vpnUITests;
+			sourceTree = "<group>";
+		};
+		3FC0E5E01E81608A00F3BB2D /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				3FC0E5E11E81608A00F3BB2D /* NetworkExtension.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -416,6 +428,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = 9J6BEX933C;
 				INFOPLIST_FILE = vpn/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.emergnz.vpn;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -432,6 +445,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = 9J6BEX933C;
 				INFOPLIST_FILE = vpn/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.emergnz.vpn;
 				PRODUCT_NAME = "$(TARGET_NAME)";

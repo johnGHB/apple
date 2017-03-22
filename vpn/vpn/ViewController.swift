@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import NetworkExtension
 
 class ViewController: UIViewController {
 
@@ -14,17 +15,17 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        NEVPNManager manager = [NEVPNManager sharedManager];
+        let manager = NEVPNManager.shared()
         
-        int status = manager.connection.status;
+        let status = manager.connection.status;
         
         if (status == NEVPNStatusConnected) {
-            manager.connection stopVPNTunnel];
+            manager.connection stopVPNTunnel;
         } else {
             
-            [[NEVPNManager sharedManager] loadFromPreferencesWithCompletionHandler: ^(NSError *error) {
+            [[NEVPNManager shared] loadFromPreferencesWithCompletionHandler:^(NSError *error) {
                 if (error) {
-                NSLog(@"Load error: %@", error);
+                    NSLog(@"Load error: %@", error);
                 }
                 else {
                 // No errors! The rest of your codes goes here...
