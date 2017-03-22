@@ -15,55 +15,53 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        let manager = NEVPNManager.shared()
+        let VPNmanager = NEVPNManager.shared()
         
-        let status = manager.connection.status
+        let VPNstatus = VPNmanager.connection.status
         //let status:NEVPNStatus
         
-        if (status == NEVPNStatus.connected) {
-            manager.connection.stopVPNTunnel();
+        let password = ""
+        let username = ""
+        let hostname = ""
+        
+        if (VPNstatus == NEVPNStatus.connected) {
+            VPNmanager.connection.stopVPNTunnel()
         } else {
             
-            [manager.loadFromPreferences(completionHandler:{ (error) -> Void in
-                if ((error) != nil) {
-                    NSLog(@"Load error: %@", error);
-                }
-                else {
-                    // No errors! The rest of your codes goes here...
-                    NEVPNProtocolIPSec *p = [[NEVPNProtocolIPSec alloc] init];
-                    p.serverAddress = @"VPN SERVER ADDRESS";
-                    p.authenticationMethod = NEVPNIKEAuthenticationMethodCertificate;
-                    p.localIdentifier = @"Local identifier";
-                    p.remoteIdentifier = @"Remote identifier";
-                    p.useExtendedAuthentication = YES;
-                    p.identityData = [NSData dataWithBase64EncodedString:certBase64String];
-                    p.identityDataPassword = @"identity password";
-                    p.disconnectOnSleep = NO;
-                    
-                    // Set protocol
-                    [[NEVPNManager sharedManager] setProtocol:p];
-                    
-                    // Set on demand
-                    NSMutableArray *rules = [[NSMutableArray alloc] init];
-                    NEOnDemandRuleConnect *connectRule = [NEOnDemandRuleConnect new];
-                    [rules addObject:connectRule];
-                    [[NEVPNManager sharedManager] setOnDemandRules:rules];
-                    
-                    // Set localized description
-                    [manager setLocalizedDescription:@"Description"];
-                    
-                    // Enable VPN
-                    [manager setEnabled:YES];
-                    
-                    // Save to preference
-                    [manager saveToPreferencesWithCompletionHandler: ^(NSError *error) {
-                    NSLog(@"Save VPN to preference complete");
-                    if (error) {
-                    NSLog(@"Save to preference error: %@", error);
+            VPNmanager.loadFromPreferences { error in
+                // setup the config:
+                let password = password
+                let vpnhost = hostname
+                let p = NEVPNProtocolIKEv2()
+                p.username = username
+                p.localIdentifier = username
+                p.serverAddress = vpnhost
+                p.remoteIdentifier = vpnhost
+                p.authenticationMethod = .none
+                p.passwordReference = password
+                p.useExtendedAuthentication = true
+                p.serverCertificateIssuerCommonName = vpnhost
+                p.disconnectOnSleep = false
+                
+                
+                var rules = [NEOnDemandRule]()
+                let rule = NEOnDemandRuleConnect()
+                rule.interfaceTypeMatch = .any
+                rules.append(rule)
+                
+                VPNmanager.localizedDescription = "My VPN"
+                VPNmanager.protocolConfiguration = p
+                VPNmanager.onDemandRules = rules
+                VPNmanager.isOnDemandEnabled = true
+                VPNmanager.isEnabled = true
+                VPNmanager.saveToPreferences { error in
+                    guard error == nil else {
+                        print("NEVPNManager.saveToPreferencesWithCompletionHandler failed: \(error!.localizedDescription)")
+                        return
                     }
-                    }];
-                } //else
-                })]; //manager loadFromPreferencesWithCompletionHandler
+                    VPNmanager.connection.startVPNTunnel()
+                }
+            } //manager loadFromPreferencesWithCompletionHandler
         } //else
         
         func didReceiveMemoryWarning() {
