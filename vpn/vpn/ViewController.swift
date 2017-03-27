@@ -8,21 +8,17 @@
 
 import UIKit
 import NetworkExtension
+import Security
+import Foundation
 
 class ViewController: UIViewController {
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+    @IBAction func ConnectVPNbutton(_ sender: AnyObject) {
+        ConnectLabel.text = "Connecting"
         
         let VPNmanager = NEVPNManager.shared()
         
         let VPNstatus = VPNmanager.connection.status
-        //let status:NEVPNStatus
-        
-        let password = ""
-        let username = ""
-        let hostname = ""
         
         if (VPNstatus == NEVPNStatus.connected) {
             VPNmanager.connection.stopVPNTunnel()
@@ -30,18 +26,23 @@ class ViewController: UIViewController {
             
             VPNmanager.loadFromPreferences { error in
                 // setup the config:
-                let password = password
-                let vpnhost = hostname
-                let p = NEVPNProtocolIKEv2()
-                p.username = username
-                p.localIdentifier = username
+                let username = "jnguyen"
+                //let password = "awsvpn3620"
+                let vpnhost = "ec2-52-40-232-14.us-west-2.compute.amazonaws.com"
+                let p = NEVPNProtocolIPSec()
+                p.authenticationMethod = NEVPNIKEAuthenticationMethod.sharedSecret
                 p.serverAddress = vpnhost
-                p.remoteIdentifier = vpnhost
-                p.authenticationMethod = .none
-                p.passwordReference = password
+                p.username = username
+                
+                let kcs = KeychainService()
+                kcs.save(key: "SHARED", value: "MY_SHARED_KEY")
+                kcs.save(key: "VPN_PASSWORD", value: "MY_PASSWORD")
+
+                p.sharedSecretReference = kcs.load(key: "eEgRez3Yu")
+                p.passwordReference = kcs.load(key: "awsvpn3620")
+
                 p.useExtendedAuthentication = true
-                p.serverCertificateIssuerCommonName = vpnhost
-                p.disconnectOnSleep = false
+                p.disconnectOnSleep = true
                 
                 
                 var rules = [NEOnDemandRule]()
@@ -49,7 +50,7 @@ class ViewController: UIViewController {
                 rule.interfaceTypeMatch = .any
                 rules.append(rule)
                 
-                VPNmanager.localizedDescription = "My VPN"
+                VPNmanager.localizedDescription = "VPNnow"
                 VPNmanager.protocolConfiguration = p
                 VPNmanager.onDemandRules = rules
                 VPNmanager.isOnDemandEnabled = true
@@ -59,10 +60,24 @@ class ViewController: UIViewController {
                         print("NEVPNManager.saveToPreferencesWithCompletionHandler failed: \(error!.localizedDescription)")
                         return
                     }
-                    VPNmanager.connection.startVPNTunnel()
+                    do {
+                        try VPNmanager.connection.startVPNTunnel()
+                        self.ConnectLabel.text = "Connected"
+                    }
+                    catch {
+                        NSLog("error: Failed to start vpn: \(error)")
+                    }
                 }
             } //manager loadFromPreferencesWithCompletionHandler
         } //else
+
+    }
+    
+    @IBOutlet var ConnectLabel: UILabel!
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        // Do any additional setup after loading the view, typically from a nib.
         
         func didReceiveMemoryWarning() {
             super.didReceiveMemoryWarning()
