@@ -172,9 +172,8 @@
 					};
 					B5AC13DF1BDA5A6600415BE0 = {
 						CreatedOnToolsVersion = 7.2;
-						DevelopmentTeam = 9J6BEX933C;
 						LastSwiftMigration = 0800;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 						SystemCapabilities = {
 							com.apple.Keychain = {
 								enabled = 1;
@@ -399,7 +398,7 @@
 				CODE_SIGN_ENTITLEMENTS = GenericKeychain/App1/GenericKeychain1.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = 9J6BEX933C;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = GenericKeychain/App1/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.example.apple-samplecode.GenericKeychain1";
@@ -417,7 +416,7 @@
 				CODE_SIGN_ENTITLEMENTS = GenericKeychain/App1/GenericKeychain1.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = 9J6BEX933C;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = GenericKeychain/App1/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.example.apple-samplecode.GenericKeychain1";
