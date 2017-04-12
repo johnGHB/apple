@@ -6,10 +6,7 @@
 //  Copyright © 2017 Emergnz. All rights reserved.
 //
 
-import Foundation
 import NetworkExtension
-import CoreData
-import Security
 
 
 class VPN {
@@ -31,7 +28,7 @@ class VPN {
         kcs.save(key: "SHARED", value: "MY_SHARED_KEY")
         kcs.save(key: "VPN_PASSWORD", value: "MY_PASSWORD")
         p.sharedSecretReference = kcs.load(key: "SHARED")
-        p.passwordReference = kcs.load(key: "VPN_PASSWORD)
+        p.passwordReference = kcs.load(key: "VPN_PASSWORD")
             p.useExtendedAuthentication = true
             p.disconnectOnSleep = false
             self.vpnManager.protocolConfiguration = p

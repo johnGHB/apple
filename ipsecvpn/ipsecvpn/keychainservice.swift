@@ -10,56 +10,65 @@ import Foundation
 import UIKit
 import Security
 
-let serviceIdentifier = "com.company"
-let accessGroup = "com.company.app"
-let kSecClassValue = kSecClass as NSString
-let kSecAttrAccountValue = kSecAttrAccount as NSString
-let kSecValueDataValue = kSecValueData as NSString
-let kSecClassGenericPasswordValue = kSecClassGenericPassword as NSString
-let kSecAttrServiceValue = kSecAttrService as NSString
-let kSecMatchLimitValue = kSecMatchLimit as NSString
-let kSecReturnDataValue = kSecReturnData as NSString
-let kSecMatchLimitOneValue = kSecMatchLimitOne as NSString
+// Identifiers
+let serviceIdentifier = "MySerivice"
+let userAccount = "authenticatedUser"
+let accessGroup = "MySerivice"
 
+// Arguments for the keychain queries
+var kSecAttrAccessGroupSwift = NSString(format: kSecClass)
+
+let kSecClassValue = kSecClass as CFString
+let kSecAttrAccountValue = kSecAttrAccount as CFString
+let kSecValueDataValue = kSecValueData as CFString
+let kSecClassGenericPasswordValue = kSecClassGenericPassword as CFString
+let kSecAttrServiceValue = kSecAttrService as CFString
+let kSecMatchLimitValue = kSecMatchLimit as CFString
+let kSecReturnDataValue = kSecReturnData as CFString
+let kSecMatchLimitOneValue = kSecMatchLimitOne as CFString
+let kSecAttrGenericValue = kSecAttrGeneric as CFString
+let kSecAttrAccessibleValue = kSecAttrAccessible as CFString
 
 class KeychainService: NSObject {
-    class func setString(value: NSString, forKey: String) {
-        self.save(serviceIdentifier, key: forKey, data: value)
-    }
-    class func stringForKey(key: String) -> NSString? {
-        var token = self.load(serviceIdentifier, key: key)
-        return token
-    }
-    class func removeItemForKey(key: String) {
-        self.save(serviceIdentifier, key: key, data: "")
-    }
-    class func save(service: NSString, key: String, data: NSString) {
-        var dataFromString: NSData = data.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)!
-        // Instantiate a new default keychain query
-        var keychainQuery: NSMutableDictionary = NSMutableDictionary(objects: [kSecClassGenericPasswordValue, service, key, dataFromString], forKeys: [kSecClassValue, kSecAttrServiceValue, kSecAttrAccountValue, kSecValueDataValue])
+    func save(key:String, value:String) {
+        let keyData: Data = key.data(using: String.Encoding(rawValue: String.Encoding.utf8.rawValue), allowLossyConversion: false)!
+        let valueData: Data = value.data(using: String.Encoding(rawValue: String.Encoding.utf8.rawValue), allowLossyConversion: false)!
+        
+        let keychainQuery = NSMutableDictionary();
+        keychainQuery[kSecClassValue as! NSCopying] = kSecClassGenericPasswordValue
+        keychainQuery[kSecAttrGenericValue as! NSCopying] = keyData
+        keychainQuery[kSecAttrAccountValue as! NSCopying] = keyData
+        keychainQuery[kSecAttrServiceValue as! NSCopying] = "VPN"
+        keychainQuery[kSecAttrAccessibleValue as! NSCopying] = kSecAttrAccessibleAlwaysThisDeviceOnly
+        keychainQuery[kSecValueData as! NSCopying] = valueData;
         // Delete any existing items
-        SecItemDelete(keychainQuery as CFDictionaryRef)
-        if data == "" { return }
-        // Add the new keychain item
-        var status: OSStatus = SecItemAdd(keychainQuery as CFDictionaryRef, nil)
+        SecItemDelete(keychainQuery as CFDictionary)
+        SecItemAdd(keychainQuery as CFDictionary, nil)
     }
-    class func load(service: NSString, key: String) -> NSString? {
-        // Instantiate a new default keychain query
-        // Tell the query to return a result
-        // Limit our results to one item
-        var keychainQuery: NSMutableDictionary = NSMutableDictionary(objects: [kSecClassGenericPasswordValue, service, key, kCFBooleanTrue, kSecMatchLimitOneValue], forKeys: [kSecClassValue, kSecAttrServiceValue, kSecAttrAccountValue, kSecReturnDataValue, kSecMatchLimitValue])
-        var dataTypeRef :Unmanaged<AnyObject>?
-        // Search for the keychain items
-        let status: OSStatus = SecItemCopyMatching(keychainQuery, &dataTypeRef)
-        let opaque = dataTypeRef?.toOpaque()
-        var contentsOfKeychain: NSString?
-        if let op = opaque? {
-            let retrievedData = Unmanaged<NSData>.fromOpaque(op).takeUnretainedValue()
-            // Convert the data retrieved from the keychain into a string
-            contentsOfKeychain = NSString(data: retrievedData, encoding: NSUTF8StringEncoding)
-        } else {
-            return nil
+    
+    func load(key: String)->Data {
+        
+        let keyData: Data = key.data(using: String.Encoding(rawValue: String.Encoding.utf8.rawValue), allowLossyConversion: false)!
+        let keychainQuery = NSMutableDictionary();
+        keychainQuery[kSecClassValue as! NSCopying] = kSecClassGenericPasswordValue
+        keychainQuery[kSecAttrGenericValue as! NSCopying] = keyData
+        keychainQuery[kSecAttrAccountValue as! NSCopying] = keyData
+        keychainQuery[kSecAttrServiceValue as! NSCopying] = "VPN"
+        keychainQuery[kSecAttrAccessibleValue as! NSCopying] = kSecAttrAccessibleAlwaysThisDeviceOnly
+        keychainQuery[kSecMatchLimit] = kSecMatchLimitOne
+        keychainQuery[kSecReturnPersistentRef] = kCFBooleanTrue
+        
+        var result: AnyObject?
+        let status = withUnsafeMutablePointer(to: &result) { SecItemCopyMatching(keychainQuery, UnsafeMutablePointer($0)) }
+        
+        
+        if status == errSecSuccess {
+            if let data = result as! NSData? {
+                if let value = NSString(data: data as Data, encoding: String.Encoding.utf8.rawValue) {
+                }
+                return data as Data;
+            }
         }
-        return contentsOfKeychain
+        return "".data(using: .utf8)!;
     }
 }
