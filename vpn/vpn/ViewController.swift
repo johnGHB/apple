@@ -26,8 +26,8 @@ class ViewController: UIViewController {
             
             VPNmanager.loadFromPreferences { error in
                 // setup the config:
-                let username = "jnguyen"
-                //let password = "awsvpn3620"
+                let username = "SomeUser"
+                //let password = ""
                 let vpnhost = "ec2-52-40-232-14.us-west-2.compute.amazonaws.com"
                 let p = NEVPNProtocolIPSec()
                 p.authenticationMethod = NEVPNIKEAuthenticationMethod.sharedSecret
@@ -38,8 +38,8 @@ class ViewController: UIViewController {
                 kcs.save(key: "SHARED", value: "MY_SHARED_KEY")
                 kcs.save(key: "VPN_PASSWORD", value: "MY_PASSWORD")
 
-                p.sharedSecretReference = kcs.load(key: "eEgRez3Yu")
-                p.passwordReference = kcs.load(key: "awsvpn3620")
+                p.sharedSecretReference = kcs.load(key: "SomeKey")
+                p.passwordReference = kcs.load(key: "SomePswd")
 
                 p.useExtendedAuthentication = true
                 p.disconnectOnSleep = true

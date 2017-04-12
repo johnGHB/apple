@@ -20,7 +20,7 @@ class VPN {
             return;
         }
         let p = NEVPNProtocolIPSec()
-        p.username = "SOME_USERNAME"
+        p.username = "jnguyen"
         p.serverAddress = "example.com"
         p.authenticationMethod = NEVPNIKEAuthenticationMethod.sharedSecret
         
