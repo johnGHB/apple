@@ -11,11 +11,20 @@ import UIKit
 
 class ViewController: UIViewController {
 
+    let vpn = VPN ()
+    
+    @IBAction func connectvpn(_ sender: Any) {
+        vpn.connectVPN()
+
+    }
+    
+    @IBAction func Disconnect(_ sender: Any) {
+        vpn.disconnectVPN()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        
-
     }
 
     override func didReceiveMemoryWarning() {

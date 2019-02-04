@@ -12,6 +12,7 @@ import NetworkExtension
 class VPN {
     
     let vpnManager = NEVPNManager.shared();
+    var vpnlock:Bool = false
     
     private var vpnLoadHandler: (Error?) -> Void { return
     { (error:Error?) in
@@ -21,18 +22,18 @@ class VPN {
         }
         let p = NEVPNProtocolIPSec()
         p.username = "jnguyen"
-        p.serverAddress = "example.com"
+        p.serverAddress = "ec2-52-40-232-14.us-west-2.compute.amazonaws.com"
         p.authenticationMethod = NEVPNIKEAuthenticationMethod.sharedSecret
         
         let kcs = KeychainService();
-        kcs.save(key: "SHARED", value: "MY_SHARED_KEY")
-        kcs.save(key: "VPN_PASSWORD", value: "MY_PASSWORD")
+        kcs.save(key: "SHARED", value: "11093620")
+        kcs.save(key: "VPN_PASSWORD", value: "awsvpn3620")
         p.sharedSecretReference = kcs.load(key: "SHARED")
         p.passwordReference = kcs.load(key: "VPN_PASSWORD")
             p.useExtendedAuthentication = true
             p.disconnectOnSleep = false
             self.vpnManager.protocolConfiguration = p
-            self.vpnManager.localizedDescription = "Contensi"
+            self.vpnManager.localizedDescription = "IPsecvpn"
             self.vpnManager.isEnabled = true
             self.vpnManager.saveToPreferences(completionHandler: self.vpnSaveHandler)
         } }
@@ -51,7 +52,7 @@ class VPN {
         }
         }
         self.vpnlock = false
-    }}
+    }
 
 public func connectVPN() {
     //For no known reason the process of saving/loading the VPN configurations fails.On the 2nd time it works
@@ -63,5 +64,6 @@ public func connectVPN() {
 }
 
 public func disconnectVPN() ->Void {
-    vpnManager.connection.stopVPNTunnel()
+    self.vpnManager.connection.stopVPNTunnel()
+}
 }

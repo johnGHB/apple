@@ -11,9 +11,9 @@ import UIKit
 import Security
 
 // Identifiers
-let serviceIdentifier = "MySerivice"
+let serviceIdentifier = "VPNSerivice"
 let userAccount = "authenticatedUser"
-let accessGroup = "MySerivice"
+let accessGroup = "VPNSerivice"
 
 // Arguments for the keychain queries
 var kSecAttrAccessGroupSwift = NSString(format: kSecClass)
